@@ -1,10 +1,50 @@
 // Get a reference to the #add-employees-btn element
 const addEmployeesBtn = document.querySelector('#add-employees-btn');
+const employeesArray = [];
 
 // Collect employee data
 const collectEmployees = function () {
-  // TODO: Get user input to create and return an array of employee objects
+  // TODO: Get user input to create and return an array of employee object
+  let addEmployee = true;
+
+  while (addEmployee) {
+    let employeeCount = 0;
+    
+    let firstName = window.prompt('Enter first name:');
+    if (!firstName) {
+      addEmployee = false;
+      return;
+    }
+    
+    let lastName = window.prompt('Enter last name:');
+    if (!lastName) {
+      addEmployee = false;
+      return;
+    }
+    
+    let salary = window.prompt('Enter salary:', 0);
+    if (isNaN(salary)) {
+      salary = window.prompt('Please enter a number for salary:');
+    }
+    
+    let employee = {
+      firstName: '',
+      lastName: '',
+      salary: 0,
+    }
+
+    employee.firstName = firstName;
+    employee.lastName = lastName;
+    employee.salary = salary;
+
+    employeesArray[employeeCount] = employee; //this works, but smarter way? need to return employeesArray?
+
+    addEmployee = false; //haven't reprompted for more employees yet
+    employeeCount++;
+  };
+  return employeesArray;
 };
+
 
 // Display the average salary
 const displayAverageSalary = function (employeesArray) {
@@ -68,13 +108,13 @@ const trackEmployeeData = function () {
 
   getRandomEmployee(employees);
 
-  employees.sort(function (a, b) {
-    if (a.lastName < b.lastName) {
-      return -1;
-    } else {
-      return 1;
-    }
-  });
+  //employees.sort(function (a, b) {
+  //  if (a.lastName < b.lastName) {
+  //    return -1;
+  //  } else {
+  //    return 1;
+  //  }
+  //};
 
   displayEmployees(employees);
 };
