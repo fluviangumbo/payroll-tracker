@@ -8,8 +8,6 @@ const collectEmployees = function () {
   let addEmployee = true;
 
   while (addEmployee) {
-    let employeeCount = 0;
-    
     let firstName = window.prompt('Enter first name:');
     if (!firstName) {
       addEmployee = false;
@@ -27,20 +25,15 @@ const collectEmployees = function () {
       salary = window.prompt('Please enter a number for salary:');
     }
     
-    let employee = {
-      firstName: '',
-      lastName: '',
-      salary: 0,
+    const newEmployee = {
+      firstName: firstName,
+      lastName: lastName,
+      salary: parseFloat(salary),
     }
 
-    employee.firstName = firstName;
-    employee.lastName = lastName;
-    employee.salary = salary;
+    employeesArray.push(newEmployee);
 
-    employeesArray[employeeCount] = employee; //this works, but smarter way? need to return employeesArray?
-
-    addEmployee = false; //haven't reprompted for more employees yet
-    employeeCount++;
+    addEmployee = window.confirm('Do you want to add another employee?');
   };
   return employeesArray;
 };
@@ -49,11 +42,28 @@ const collectEmployees = function () {
 // Display the average salary
 const displayAverageSalary = function (employeesArray) {
   // TODO: Calculate and display the average salary
+  const roster = employeesArray.length;
+  let avgSalary = 0;
+  let salTotal = 0;
+
+  for (i = 0; i < roster; i++) {
+    salTotal = parseFloat(salTotal) + parseFloat(employeesArray[i].salary);
+  }
+
+  console.log(parseFloat(roster));
+  console.log(parseFloat(salTotal));
+
+  avgSalary = parseFloat(salTotal)/parseFloat(roster).toFixed(2);
+  console.log('The average employee salary between our ' + roster + ' employee(s) is $' + parseFloat(avgSalary).toFixed(2));
 };
 
 // Select a random employee
 const getRandomEmployee = function (employeesArray) {
   // TODO: Select and display a random employee
+  const index = Math.floor(Math.random() * (employeesArray.length));
+  console.log(employeesArray[index]);
+  
+  console.log('Congratulations to ' + employeesArray[index].firstName + ' ' + employeesArray[index].lastName + ', our random drawing winner!');
 };
 
 /*
@@ -108,13 +118,13 @@ const trackEmployeeData = function () {
 
   getRandomEmployee(employees);
 
-  //employees.sort(function (a, b) {
-  //  if (a.lastName < b.lastName) {
-  //    return -1;
-  //  } else {
-  //    return 1;
-  //  }
-  //};
+  employees.sort(function (a, b) {
+   if (a.lastName < b.lastName) {
+     return -1;
+   } else {
+     return 1;
+   }
+  });
 
   displayEmployees(employees);
 };
